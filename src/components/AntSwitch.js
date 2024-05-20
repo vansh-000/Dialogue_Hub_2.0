@@ -1,5 +1,4 @@
-import { Switch } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Switch, styled } from "@mui/material";
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 40,
@@ -11,7 +10,7 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
       width: 15,
     },
     "& .MuiSwitch-switchBase.Mui-checked": {
-      transform: "translateX(9px)",
+      transform: "translateX(20px)",
     },
   },
   "& .MuiSwitch-switchBase": {
@@ -21,7 +20,7 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
       color: "#fff",
       "& + .MuiSwitch-track": {
         opacity: 1,
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.mode === "dark" ? "#177ddc" : "#1890ff",
       },
     },
   },

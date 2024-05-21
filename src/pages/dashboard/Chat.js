@@ -54,7 +54,10 @@ const ChatElement = ({ id, img, name, msg, time, unread, pinned, online }) => {
       sx={{
         width: "100%",
         borderRadius: 1,
-        backgroundColor:theme.palette.mode === "light" ? "#fff" : theme.palette.background.default ,
+        backgroundColor:
+          theme.palette.mode === "light"
+            ? "#fff"
+            : theme.palette.background.default,
       }}
       p={2}
       key={id}
@@ -132,8 +135,10 @@ const Chat = () => {
         boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)",
       }}
     >
-      <Stack p={3} spacing={3} sx={{ height: "100vh" }}>
+      <Stack p={0.5} spacing={3} sx={{ height: "100vh" }}>
         <Stack
+          px={3}
+          pt={3}
           direction="row"
           alignItems="center"
           justifyContent="space-between"
@@ -143,7 +148,7 @@ const Chat = () => {
             <CircleDashed />
           </IconButton>
         </Stack>
-        <Stack sx={{ width: "100%" }}>
+        <Stack px={3} sx={{ width: "100%" }}>
           <Search>
             <SearchIconWrapper>
               <MagnifyingGlass color="#709CE6" />
@@ -154,7 +159,7 @@ const Chat = () => {
             />
           </Search>
         </Stack>
-        <Stack spacing={0.3}>
+        <Stack px={3} spacing={0.3}>
           <Stack direction="row" alignItems="center" spacing={1.5}>
             <ArchiveBox size={24} />
             <Button>Archive Chats</Button>
@@ -169,27 +174,19 @@ const Chat = () => {
             overflowY: "auto",
             height: "100%",
             "&::-webkit-scrollbar": {
-              width: 0,
+              width: "3px",
               background: "transparent",
             },
-            "&:hover": {
-              "&::-webkit-scrollbar": {
-                width: "0.05em",
-              },
-              "&::-webkit-scrollbar-track": {
-                background: "#f1f1f1",
-              },
-              "&::-webkit-scrollbar-thumb": {
-                backgroundColor: "#888",
-                borderRadius: "10px",
-              },
-              "&::-webkit-scrollbar-thumb:hover": {
-                background: "#555",
-              },
+            "&:hover::-webkit-scrollbar": {
+              background: "transparent",
+            },
+            "&:hover::-webkit-scrollbar-thumb": {
+              backgroundColor: theme.palette.primary.main,
+              borderRadius: "4px",
             },
           }}
         >
-          <Stack spacing={2.4}>
+          <Stack px={3} spacing={2.4}>
             <Typography variant="subtitle2" sx={{ color: "#676767" }}>
               Pinned
             </Typography>
@@ -197,7 +194,7 @@ const Chat = () => {
               <ChatElement key={el.id} {...el} />
             ))}
           </Stack>
-          <Stack spacing={2.4}>
+          <Stack px={3} spacing={2.4}>
             <Typography variant="subtitle2" sx={{ color: "#676767" }}>
               All Chats
             </Typography>

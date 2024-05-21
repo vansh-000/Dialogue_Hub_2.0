@@ -1,10 +1,11 @@
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, useTheme } from "@mui/material";
 import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Messages from "./Messages";
 
 const Conversation = () => {
+  const theme = useTheme();
   return (
     <Stack height="100%" maxHeight="100vh" width="auto">
       <Header />
@@ -15,10 +16,18 @@ const Conversation = () => {
           flexGrow: 1,
           height: "100%",
           overflowY: "scroll",
-          scrollbarWidth: "none", // For Firefox
-          "-ms-overflow-style": "none", // For Internet Explorer and Edge
+          p: 3,
+          spacing: 3,
           "&::-webkit-scrollbar": {
-            display: "none", // For Chrome, Safari, and Opera
+            width: "4px",
+            background: "transparent",
+          },
+          "&:hover::-webkit-scrollbar": {
+            background: "transparent",
+          },
+          "&:hover::-webkit-scrollbar-thumb": {
+            backgroundColor: theme.palette.primary.main,
+            borderRadius: "4px",
           },
         }}
       >

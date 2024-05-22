@@ -2,8 +2,14 @@ import {
   Avatar,
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Divider,
   IconButton,
+  Slide,
   Stack,
   Typography,
   useTheme,
@@ -18,18 +24,78 @@ import {
   VideoCamera,
   XCircle,
 } from "phosphor-react";
-import React from "react";
+import React, { useState } from "react";
 import { dispatch } from "../redux/store";
-import { ToggleSidebar } from "../redux/slices/app";
+import { ToggleSidebar, updateSidebarType } from "../redux/slices/app";
 import { faker } from "@faker-js/faker";
 import AntSwitch from "./AntSwitch";
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const BlockDialog = ({ open, handleClose }) => {
+  return (
+    <Dialog
+      open={open}
+      TransitionComponent={Transition}
+      keepMounted
+      onClose={handleClose}
+      aria-describedby="alert-dialog-slide-description"
+    >
+      <DialogTitle>Block This Contact</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-slide-description">
+          Are you sure you want to block this Contact?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleClose}>Yes</Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+const DeleteDialog = ({ open, handleClose }) => {
+  return (
+    <Dialog
+      open={open}
+      TransitionComponent={Transition}
+      keepMounted
+      onClose={handleClose}
+      aria-describedby="alert-dialog-slide-description"
+    >
+      <DialogTitle>Delete This Contact</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-slide-description">
+          Are you sure you want to delete this Contact?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleClose}>Yes</Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
 const Contact = () => {
   const theme = useTheme();
+  const [openBlock, setOpenBlock] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
 
+  const handleCloseBlock = () => {
+    setOpenBlock(false);
+  };
+
+  const handleCloseDelete = () => {
+    setOpenDelete(false);
+  };
   return (
     <Box sx={{ width: 320, height: "100vh" }}>
       <Stack sx={{ height: "100%" }}>
+        {/* Header */}
         <Box
           sx={{
             boxShadow: "0px 0px 2px rgba(0,0,0,0.25)",
@@ -58,6 +124,7 @@ const Contact = () => {
             <Typography variant="article">Contact Info</Typography>
           </Stack>
         </Box>
+
         <Stack
           spacing={3}
           sx={{
@@ -66,16 +133,16 @@ const Contact = () => {
             flexGrow: 1,
             overflowY: "scroll",
             p: 3,
-            '&::-webkit-scrollbar': {
-              width: '4px',
-              background: 'transparent', 
+            "&::-webkit-scrollbar": {
+              width: "4px",
+              background: "transparent",
             },
-            '&:hover::-webkit-scrollbar': {
-              background: 'transparent', 
+            "&:hover::-webkit-scrollbar": {
+              background: "transparent",
             },
-            '&:hover::-webkit-scrollbar-thumb': {
-              backgroundColor: theme.palette.primary.main, 
-              borderRadius: '4px',
+            "&:hover::-webkit-scrollbar-thumb": {
+              backgroundColor: theme.palette.primary.main,
+              borderRadius: "4px",
             },
           }}
         >
@@ -126,7 +193,14 @@ const Contact = () => {
             justifyContent={"space-between"}
           >
             <Typography variant="subtitle2">Media, Links & Docs</Typography>
-            <Button endIcon={<CaretRight />}>401</Button>
+            <Button
+              onClick={() => {
+                dispatch(updateSidebarType("SHARED"));
+              }}
+              endIcon={<CaretRight />}
+            >
+              401
+            </Button>
           </Stack>
           <Stack direction={"row"} spacing={2} alignItems={"center"}>
             {[1, 2, 3].map((el, index) => (
@@ -145,7 +219,11 @@ const Contact = () => {
               <Star size={21} />
               <Typography variant="subtitle2">Starred Message</Typography>
             </Stack>
-            <IconButton>
+            <IconButton
+              onClick={() => {
+                dispatch(updateSidebarType("STARRED"));
+              }}
+            >
               <CaretRight />
             </IconButton>
           </Stack>
@@ -172,16 +250,41 @@ const Contact = () => {
               </Typography>
             </Stack>
           </Stack>
-          <Stack direction={"row"} alignItems={"center"} spacing={2} justifyContent={"space-evenly"}>
-            <Button startIcon={<Prohibit/>} fullWidth variant="outlined">
+          <Stack
+            direction={"row"}
+            alignItems={"center"}
+            spacing={2}
+            justifyContent={"space-evenly"}
+          >
+            <Button
+              onClick={() => {
+                setOpenBlock(true);
+              }}
+              startIcon={<Prohibit />}
+              fullWidth
+              variant="outlined"
+            >
               Block
             </Button>
-            <Button startIcon={<Trash/>} fullWidth variant="outlined">
+            <Button
+              onClick={() => {
+                setOpenDelete(true);
+              }}
+              startIcon={<Trash />}
+              fullWidth
+              variant="outlined"
+            >
               Delete
             </Button>
           </Stack>
         </Stack>
       </Stack>
+      {openBlock && (
+        <BlockDialog open={openBlock} handleClose={handleCloseBlock} />
+      )}
+      {openDelete && (
+        <DeleteDialog open={openDelete} handleClose={handleCloseDelete} />
+      )}
     </Box>
   );
 };

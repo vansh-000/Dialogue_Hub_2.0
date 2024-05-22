@@ -31,7 +31,7 @@ const Conversation = () => {
           },
         }}
       >
-        <Messages />
+        <Messages menu={true} />
       </Box>
 
       <Footer />

@@ -51,7 +51,7 @@ const Sidebar = () => {
         <Stack alignItems="center" spacing={4}>
           <Box
             sx={{
-              backgroundColor: theme.palette.primary.main,
+              // backgroundColor: theme.palette.primary.main,
               height: 64,
               width: 64,
               borderRadius: 1.5,

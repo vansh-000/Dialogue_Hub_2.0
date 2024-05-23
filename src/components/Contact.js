@@ -9,7 +9,6 @@ import {
   DialogTitle,
   Divider,
   IconButton,
-  Slide,
   Stack,
   Typography,
   useTheme,
@@ -29,10 +28,8 @@ import { dispatch } from "../redux/store";
 import { ToggleSidebar, updateSidebarType } from "../redux/slices/app";
 import { faker } from "@faker-js/faker";
 import AntSwitch from "./AntSwitch";
+import Transition from "./DialogueTransition";
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
 const BlockDialog = ({ open, handleClose }) => {
   return (

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import FormProvider from "../../components/hook-form/FormProvider";
-import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {Link as RouterLink} from 'react-router-dom';
+import * as Yup from "yup";
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Alert,
   Button,
@@ -12,8 +11,9 @@ import {
   Link,
   Stack,
 } from "@mui/material";
-import RHFTextField from "./../../components/hook-form/RHFTextField";
 import { Eye, EyeSlash } from "phosphor-react";
+import FormProvider from "../../components/hook-form/FormProvider";
+import RHFTextField from "../../components/hook-form/RHFTextField";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -46,7 +46,7 @@ const LoginForm = () => {
     try {
       // submit data
     } catch (error) {
-      console.log(error);
+      console.error(error);
       reset();
       setError("afterSubmit", {
         ...error,
@@ -58,7 +58,7 @@ const LoginForm = () => {
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
-        {!!errors.afterSubmit && (
+        {errors.afterSubmit && (
           <Alert severity="error">{errors.afterSubmit.message}</Alert>
         )}
         <RHFTextField name="email" label="Email address" />
@@ -68,11 +68,10 @@ const LoginForm = () => {
           type={showPassword ? "text" : "password"}
           InputProps={{
             endAdornment: (
-              <InputAdornment>
+              <InputAdornment position="end">
                 <IconButton
-                  onClick={() => {
-                    setShowPassword(!showPassword);
-                  }}
+                  onClick={() => setShowPassword(!showPassword)}
+                  edge="end"
                 >
                   {showPassword ? <Eye /> : <EyeSlash />}
                 </IconButton>
@@ -81,8 +80,14 @@ const LoginForm = () => {
           }}
         />
       </Stack>
-      <Stack alignItems={"flex-end"} sx={{ my: 2 }}>
-        <Link variant="body2" to="/auth/reset-password" component={RouterLink} color={"inherit"} underline="always">
+      <Stack alignItems="flex-end" sx={{ my: 2 }}>
+        <Link
+          variant="body2"
+          to="/auth/reset-password"
+          component={RouterLink}
+          color="inherit"
+          underline="always"
+        >
           Forgot Password?
         </Link>
       </Stack>
@@ -102,6 +107,7 @@ const LoginForm = () => {
               theme.palette.mode === "light" ? "common.white" : "grey.800",
           },
         }}
+        disabled={isSubmitting}
       >
         Login
       </Button>

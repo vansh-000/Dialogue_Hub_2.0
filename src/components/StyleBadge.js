@@ -30,4 +30,3 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   }));
 
   export default StyledBadge;
-  

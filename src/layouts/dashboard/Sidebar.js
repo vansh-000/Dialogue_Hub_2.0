@@ -17,13 +17,15 @@ import Logo from "../../assets/Images/logo.ico";
 import useSettings from "../../hooks/useSettings";
 import AntSwitch from "../../components/AntSwitch";
 
+import { useNavigate } from "react-router-dom";
+
 const getPath = (index) => {
   switch (index) {
     case 0:
       return "/app";
 
     case 1:
-      return "/group";
+      return "/groups";
 
     case 2:
       return "/call";
@@ -38,11 +40,12 @@ const getPath = (index) => {
 
 const Sidebar = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [selected, setSelected] = useState(0);
   const { onToggleMode } = useSettings();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
+ 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -70,7 +73,6 @@ const Sidebar = () => {
         <Stack alignItems="center" spacing={4}>
           <Box
             sx={{
-              // backgroundColor: theme.palette.primary.main,
               height: 64,
               width: 64,
               borderRadius: 1.5,
@@ -110,6 +112,7 @@ const Sidebar = () => {
                 <IconButton
                   onClick={()=>{
                     setSelected(el.index);
+                    navigate(getPath(el.index));
                   }}
                   sx={{
                     width: "max-content",
@@ -143,7 +146,8 @@ const Sidebar = () => {
               </Box>
             ) : (
               <IconButton
-                onClick={() => setSelected(3)}
+                onClick={() =>{ setSelected(3); 
+                  navigate(getPath(3));}}
                 sx={{
                   width: "max-content",
                   color:

@@ -38,6 +38,21 @@ const getPath = (index) => {
   }
 };
 
+const getMenuPath = (index) => {
+  switch (index) {
+    case 0:
+      return "/profile";
+
+    case 1:
+      return "/settings";
+
+    case 2:
+      return "/auth/login";
+
+    default:
+      break;
+  }
+};
 const Sidebar = () => {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -45,7 +60,7 @@ const Sidebar = () => {
   const { onToggleMode } = useSettings();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
- 
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -110,7 +125,7 @@ const Sidebar = () => {
                 </Box>
               ) : (
                 <IconButton
-                  onClick={()=>{
+                  onClick={() => {
                     setSelected(el.index);
                     navigate(getPath(el.index));
                   }}
@@ -122,7 +137,9 @@ const Sidebar = () => {
                         : theme.palette.text.primary,
                   }}
                   key={el.index}
-                >{el.icon}</IconButton>
+                >
+                  {el.icon}
+                </IconButton>
               )
             )}
 
@@ -146,8 +163,10 @@ const Sidebar = () => {
               </Box>
             ) : (
               <IconButton
-                onClick={() =>{ setSelected(3); 
-                  navigate(getPath(3));}}
+                onClick={() => {
+                  setSelected(3);
+                  navigate(getPath(3));
+                }}
                 sx={{
                   width: "max-content",
                   color:
@@ -182,18 +201,26 @@ const Sidebar = () => {
             }}
             // to shift the origin of the avatar and the menu bar
             anchorOrigin={{
-              vertical:"bottom",
-              horizontal:"right",
+              vertical: "bottom",
+              horizontal: "right",
             }}
             transformOrigin={{
-              vertical:"bottom",
-              horizontal:"left",
+              vertical: "bottom",
+              horizontal: "left",
             }}
           >
             <Stack spacing={1} px={1}>
               {Profile_Menu.map((el, index) => (
-                <MenuItem key={index} onClick={handleClose}>
+                <MenuItem
+                  key={index}
+                  onClick={() => {
+                    handleClick();
+                  }}
+                >
                   <Stack
+                    onClick={() => {
+                      navigate(getMenuPath(index));
+                    }}
                     sx={{ width: 100 }}
                     direction={"row"}
                     alignItems={"center"}

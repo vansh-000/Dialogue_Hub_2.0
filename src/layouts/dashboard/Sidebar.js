@@ -17,6 +17,25 @@ import Logo from "../../assets/Images/logo.ico";
 import useSettings from "../../hooks/useSettings";
 import AntSwitch from "../../components/AntSwitch";
 
+const getPath = (index) => {
+  switch (index) {
+    case 0:
+      return "/app";
+
+    case 1:
+      return "/group";
+
+    case 2:
+      return "/call";
+
+    case 3:
+      return "/settings";
+
+    default:
+      break;
+  }
+};
+
 const Sidebar = () => {
   const theme = useTheme();
   const [selected, setSelected] = useState(0);
@@ -68,48 +87,74 @@ const Sidebar = () => {
             alignItems="center"
             spacing={3}
           >
-            {Nav_Buttons.map((el) => (
+            {Nav_Buttons.map((el) =>
+              el.index === selected ? (
+                <Box
+                  p={1}
+                  sx={{
+                    backgroundColor: theme.palette.primary.main,
+                    borderRadius: 1.5,
+                  }}
+                >
+                  <IconButton
+                    sx={{
+                      width: "max-content",
+                      color: "#fff",
+                    }}
+                    key={el.index}
+                  >
+                    {el.icon}
+                  </IconButton>
+                </Box>
+              ) : (
+                <IconButton
+                  onClick={()=>{
+                    setSelected(el.index);
+                  }}
+                  sx={{
+                    width: "max-content",
+                    color:
+                      theme.palette.mode === "light"
+                        ? "#000"
+                        : theme.palette.text.primary,
+                  }}
+                  key={el.index}
+                >{el.icon}</IconButton>
+              )
+            )}
+
+            <Divider sx={{ width: "48px" }} />
+            {selected === 3 ? (
+              <Box
+                p={1}
+                sx={{
+                  backgroundColor: theme.palette.primary.main,
+                  borderRadius: 1.5,
+                }}
+              >
+                <IconButton
+                  sx={{
+                    width: "max-content",
+                    color: "#fff",
+                  }}
+                >
+                  <Gear />
+                </IconButton>
+              </Box>
+            ) : (
               <IconButton
-                key={el.index}
-                onClick={() => setSelected(el.index)}
+                onClick={() => setSelected(3)}
                 sx={{
                   width: "max-content",
                   color:
-                    el.index === selected
-                      ? "#fff"
-                      : theme.palette.mode === "light"
+                    theme.palette.mode === "light"
                       ? "#000"
                       : theme.palette.text.primary,
-                  backgroundColor:
-                    el.index === selected
-                      ? theme.palette.primary.main
-                      : "transparent",
-                  borderRadius: 1.5,
-                  p: 1,
                 }}
               >
-                {el.icon}
+                <Gear />
               </IconButton>
-            ))}
-            <Divider sx={{ width: "48px" }} />
-            <IconButton
-              onClick={() => setSelected(3)}
-              sx={{
-                width: "max-content",
-                color:
-                  selected === 3
-                    ? "#fff"
-                    : theme.palette.mode === "light"
-                    ? "#000"
-                    : theme.palette.text.primary,
-                backgroundColor:
-                  selected === 3 ? theme.palette.primary.main : "transparent",
-                borderRadius: 1.5,
-                p: 1,
-              }}
-            >
-              <Gear />
-            </IconButton>
+            )}
           </Stack>
         </Stack>
 

@@ -220,6 +220,8 @@ const Sidebar = () => {
                   <Stack
                     onClick={() => {
                       navigate(getMenuPath(index));
+                      setSelected(index === 1 ? 3 : index); 
+                      handleClose();
                     }}
                     sx={{ width: 100 }}
                     direction={"row"}

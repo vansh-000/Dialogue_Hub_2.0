@@ -12,7 +12,7 @@ const ChatElement = ({ id, img, name, msg, time, unread, pinned, online }) => {
           backgroundColor:
             theme.palette.mode === "light"
               ? "#fff"
-              : theme.palette.background.default,
+              : theme.palette.background.paper,
         }}
         p={2}
         key={id}
